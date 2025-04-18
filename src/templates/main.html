@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Hola, {{ username }}! 👋</h1>
+<div id="chatbox"></div>
+<input type="text" id="user_input" placeholder="Escribe tu mensaje...">
+<button onclick="sendMessage()">Enviar</button>
+
+<script>
+    async function sendMessage() {
+        const input = document.getElementById('user_input');
+        const chatbox = document.getElementById('chatbox');
+        const userMessage = input.value;
+        
+        // Mostrar mensaje del usuario
+        chatbox.innerHTML += `<p><strong>Tú:</strong> ${userMessage}</p>`;
+        
+        // Enviar a la API de Flask
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: userMessage })
+        });
+        const data = await response.json();
+        
+        // Mostrar respuesta del bot
+        if (data.reply) {
+            chatbox.innerHTML += `<p><strong>Bot:</strong> ${data.reply}</p>`;
+        } else {
+            chatbox.innerHTML += `<p style="color:red;">Error: ${data.error}</p>`;
+        }
+        
+        input.value = '';
+    }
+</script>
+{%endblock%}
