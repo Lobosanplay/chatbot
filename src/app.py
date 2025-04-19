@@ -1,37 +1,26 @@
-from flask import Flask, request, jsonify, render_template
-from config import config 
+from flask import Flask
+
+from config import Config, runer
+from views.login import login
+from views.chat import chat
+from views.home import principal
+from models import db
+
 import openai
 import os
 
 app = Flask(__name__)
+app.config.from_object(Config)
+db.init_app(app)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-@app.route("/")
-def home():
-    user_name = "Juan"
-    return render_template('main.html', nombre=user_name) 
-
-@app.route("/login", methods=['POST', "GET"])
-def login():
-    if request.method == "POST":
-        print(request.form["username"])
-        print(request.form["password"])
-        return render_template("auth/login.html")
-    else:
-        return render_template("auth/login.html")
-
-@app.route('/chat', methods=['POST'])
-def chat():
-    user_input = request.json.get('message', '').lower()
-    respuesta = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[{"role": "user", "content": user_input}]
-    ).choices[0].message.content
-    return jsonify({"response": respuesta})
+app.register_blueprint(login)
+app.register_blueprint(chat)
+app.register_blueprint(principal)
 
 
 
 if __name__ == '__main__':
-    app.config.from_object(config["development"])
+    app.config.from_object(runer["development"])
     app.run()
 
