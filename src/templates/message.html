@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style_message.css")}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar 3D -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon animate__animated animate__pulse animate__infinite">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <span>Quantum AI</span>
+                </div>
+                <button class="new-chat-btn glow-on-hover">
+                    <i class="fas fa-plus"></i> Nueva conversación
+                </button>
+            </div>
+
+            <div class="search-container">
+                <input type="text" placeholder="Buscar conversaciones...">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="chat-history">
+                <div class="history-section">
+                    <div class="section-title">Hoy</div>
+                    <div class="history-item active" data-theme="tech">
+                        <div class="item-icon tech-bg">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-title">Soporte Técnico</span>
+                            <span class="item-preview">Cómo solucionar el error...</span>
+                        </div>
+                        <span class="item-time">10:45 AM</span>
+                    </div>
+                    <div class="history-item" data-theme="creative">
+                        <div class="item-icon creative-bg">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-title">Ideas Creativas</span>
+                            <span class="item-preview">Diseño de logo para...</span>
+                        </div>
+                        <span class="item-time">9:30 AM</span>
+                    </div>
+                </div>
+
+                <div class="history-section">
+                    <div class="section-title">Ayer</div>
+                    <div class="history-item" data-theme="business">
+                        <div class="item-icon business-bg">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-title">Análisis de Mercado</span>
+                            <span class="item-preview">Tendencias Q2 2023...</span>
+                        </div>
+                        <span class="item-time">5:20 PM</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-modes">
+                <div class="mode-title">Modo AI</div>
+                <div class="mode-options">
+                    <div class="mode-option active" data-mode="balanced">
+                        <i class="fas fa-scale-balanced"></i>
+                        <span>Equilibrado</span>
+                    </div>
+                    <div class="mode-option" data-mode="creative">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Creativo</span>
+                    </div>
+                    <div class="mode-option" data-mode="precise">
+                        <i class="fas fa-bullseye"></i>
+                        <span>Preciso</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-profile">
+                <div class="avatar-container">
+                    <div class="avatar-ring">
+                        <img src="https://i.pravatar.cc/150?img=5" alt="Usuario">
+                    </div>
+                    <div class="status-dot online"></div>
+                </div>
+                <div class="user-info">
+                    <span class="username">Alex Johnson</span>
+                    <span class="user-plan">Plan Pro</span>
+                </div>
+                <button class="settings-btn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="chat-container">
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <div class="chat-info">
+                    <div class="avatar-container bot-avatar">
+                        <div class="avatar-ring pulse-animation">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="status-dot online"></div>
+                    </div>
+                    <div class="chat-details">
+                        <h2>Quantum Assistant</h2>
+                        <div class="chat-meta">
+                            <span class="model-version">GPT-4 Turbo</span>
+                            <span class="context-tokens">128k contexto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button class="action-btn" title="Compartir">
+                        <i class="fas fa-share-nodes"></i>
+                    </button>
+                    <button class="action-btn" title="Archivar">
+                        <i class="fas fa-archive"></i>
+                    </button>
+                    <div class="dropdown">
+                        <button class="action-btn" title="Más opciones">
+                            <i class="fas fa-ellipsis-vertical"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#"><i class="fas fa-moon"></i> Modo Oscuro</a>
+                            <a href="#"><i class="fas fa-sliders"></i> Configuración</a>
+                            <a href="#"><i class="fas fa-bug"></i> Reportar problema</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chat-messages">
+                <div class="welcome-section">
+                    <div class="welcome-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>¡Hola, soy Quantum AI!</h3>
+                    <p>Tu asistente de inteligencia artificial de última generación. Puedo ayudarte con:</p>
+                    <div class="suggestion-chips">
+                        <div class="chip">Redactar un correo</div>
+                        <div class="chip">Generar código</div>
+                        <div class="chip">Analizar datos</div>
+                        <div class="chip">Brainstorming</div>
+                    </div>
+                </div>
+
+                <div class="message-date">HOY</div>
+
+                <div class="message bot-message">
+                    <div class="avatar-container bot-avatar">
+                        <div class="avatar-ring">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-text">¡Hola! 👋 Soy Quantum AI, tu asistente personal. Estoy aquí para ayudarte con lo que necesites. ¿Por dónde quieres empezar hoy?</div>
+                        <div class="message-footer">
+                            <span class="message-time">10:00 AM</span>
+                            <div class="message-actions">
+                                <button class="action-btn" title="Regenerar"><i class="fas fa-arrows-rotate"></i></button>
+                                <button class="action-btn" title="Copiar"><i class="far fa-copy"></i></button>
+                                <button class="action-btn" title="Me gusta"><i class="far fa-thumbs-up"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <div class="input-tools">
+                    <button class="tool-btn" title="Adjuntar archivo">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <button class="tool-btn" title="Grabar audio">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button class="tool-btn emoji-btn" title="Emojis">
+                        <i class="far fa-smile"></i>
+                    </button>
+                </div>
+                <div class="message-input-wrapper">
+                    <textarea id="user-input" placeholder="Escribe un mensaje..." rows="1"></textarea>
+                    <div class="input-suggestions">
+                        <span>Sugerencias:</span>
+                        <div class="suggestion">¿Cómo puedo mejorar mi productividad?</div>
+                        <div class="suggestion">Explícame como funciona ChatGPT</div>
+                    </div>
+                </div>
+                <button id="send-button" class="send-btn floating-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <div class="panel-header">
+                <h3>Herramientas</h3>
+                <button class="close-panel">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="panel-tabs">
+                <div class="tab active" data-tab="files">
+                    <i class="fas fa-file"></i>
+                    <span>Archivos</span>
+                </div>
+                <div class="tab" data-tab="web">
+                    <i class="fas fa-globe"></i>
+                    <span>Web</span>
+                </div>
+                <div class="tab" data-tab="plugins">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <span>Plugins</span>
+                </div>
+            </div>
+            <div class="panel-content">
+                <div class="tab-content active" id="files-tab">
+                    <div class="file-upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Arrastra archivos aquí o haz clic para subir</p>
+                        <input type="file" id="file-upload" multiple>
+                    </div>
+                    <div class="file-list">
+                        <div class="file-item">
+                            <div class="file-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="file-info">
+                                <span class="file-name">Informe_Q2.pdf</span>
+                                <span class="file-size">2.4 MB</span>
+                            </div>
+                            <button class="file-action">
+                                <i class="fas fa-ellipsis-vertical"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Elements -->
+    <div class="floating-notification">
+        <div class="notification-content">
+            <i class="fas fa-bolt"></i>
+            <div class="notification-text">
+                <strong>Nueva actualización disponible</strong>
+                <span>Versión 2.3.1 con mejoras de rendimiento</span>
+            </div>
+            <button class="notification-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="floating-action-btn">
+        <i class="fas fa-magic"></i>
+    </div>
+
+    <!-- Emoji Picker (hidden by default) -->
+    <div class="emoji-picker">
+        <div class="emoji-categories">
+            <button class="category-btn active"><i class="far fa-smile"></i></button>
+            <button class="category-btn"><i class="far fa-laugh-squint"></i></button>
+            <button class="category-btn"><i class="far fa-surprise"></i></button>
+        </div>
+        <div class="emoji-grid">
+            <!-- Emojis would be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
