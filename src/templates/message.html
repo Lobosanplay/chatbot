@@ -183,31 +183,33 @@
             </div>
 
             <!-- Chat Input -->
-            <div class="chat-input-container">
-                <div class="input-tools">
-                    <button class="tool-btn" title="Adjuntar archivo">
-                        <i class="fas fa-paperclip"></i>
-                    </button>
-                    <button class="tool-btn" title="Grabar audio">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                    <button class="tool-btn emoji-btn" title="Emojis">
-                        <i class="far fa-smile"></i>
-                    </button>
-                </div>
-                <div class="message-input-wrapper">
-                    <textarea id="user-input" placeholder="Escribe un mensaje..." rows="1"></textarea>
-                    <div class="input-suggestions">
-                        <span>Sugerencias:</span>
-                        <div class="suggestion">¿Cómo puedo mejorar mi productividad?</div>
-                        <div class="suggestion">Explícame como funciona ChatGPT</div>
+            <form id="chat-form" method="POST" action="/chat"> 
+                <div class="chat-input-container">
+                    <div class="input-tools">
+                        <button class="tool-btn" title="Adjuntar archivo">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="tool-btn" title="Grabar audio">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="tool-btn emoji-btn" title="Emojis">
+                            <i class="far fa-smile"></i>
+                        </button>
                     </div>
+                    <div class="message-input-wrapper">
+                        <textarea id="user-input" placeholder="Escribe un mensaje..." rows="1"></textarea>
+                        <div class="input-suggestions">
+                            <span>Sugerencias:</span>
+                            <div class="suggestion">¿Cómo puedo mejorar mi productividad?</div>
+                            <div class="suggestion">Explícame como funciona ChatGPT</div>
+                        </div>
+                    </div>
+                    <button id="send-button" class="send-btn floating-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
                 </div>
-                <button id="send-button" class="send-btn floating-btn">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
             </div>
-        </div>
+        </form>
 
         <!-- Right Panel -->
         <div class="right-panel">
@@ -287,6 +289,51 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.getElementById('chat-form').addEventListener('submit', function(e) {
+            const message = document.getElementById('user-input').value.trim();
+            if (!message) {
+                e.preventDefault(); // Evitar envío si está vacío
+                alert('Por favor, escribe un mensaje antes de enviar.');
+            }
+        });
+        
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ message: message })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                // Mostrar la respuesta en la interfaz
+                mostrarRespuesta(data.response);
+                messageInput.value = ''; // Limpiar el input
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    
+    function mostrarRespuesta(respuesta) {
+        // Aquí puedes agregar la respuesta a un chat en la interfaz
+        const chatBox = document.getElementById('chat-box');
+        chatbox.innerHTML += `<p><strong>Tú:</strong> ${userMessage}</p>`;
+        if (!chatBox) {
+            // Crear un contenedor si no existe
+            const container = document.createElement('div');
+            container.id = 'chat-box';
+            document.body.appendChild(container);
+        }
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'bot-message';
+        msgDiv.innerText = respuesta;
+        document.getElementById('chat-box').appendChild(msgDiv);
+    }
+    </script>
 </body>
 </html>
