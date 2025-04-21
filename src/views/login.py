@@ -9,8 +9,7 @@ Auth = Blueprint("auth", __name__)
 @Auth.route("/login", methods=["GET", 'POST'])
 def auth():
     if request.method == 'POST':
-        action = request.form.get('action')  # 'login' o 'register'
-
+        action = request.form.get('action')  # 'login' o 'register' 67d675ed0adb37c82eea06d363d37a5222de67f5
         if action == 'register':
             # Registro de usuario
             name_register = db.get('register-name')

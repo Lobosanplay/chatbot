@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Registrarse</h2>
+<form method="POST">
+    <input type="email" name="email" placeholder="Correo" required>
+    <input type="password" name="password" placeholder="Contraseña" required>
+    <button type="submit">Entrar</button>
+</form>
+<a href="{{ url_for('google_login') }}">Entrar con Google</a>
+{% endblock %}
