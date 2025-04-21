@@ -4,5 +4,4 @@ principal = Blueprint("inicio", __name__)
 
 @principal.route("/")
 def home():
-    user_name = "Juan"
-    return render_template('message.html', nombre=user_name) 
+    return render_template('message.html') 

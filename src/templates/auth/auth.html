@@ -24,12 +24,23 @@
                 <i class="fas fa-cloud" title="Cloud Computing"></i>
             </div>
         </div>
-
-        <div class="form-container">
-            <div class="form-toggle">
-                <button class="toggle-btn active" id="login-toggle">Iniciar Sesión</button>
-                <button class="toggle-btn" id="register-toggle">Registrarse</button>
-            </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}  
+        <form method="POST" action="{{ url_for('auth.auth') }}">
+            <input type="hidden" name="action" id="action" value="login" />
+            <div class="form-container">
+                <div class="form-toggle">
+                    <button class="toggle-btn active" type="button" id="login-toggle" onclick="document.getElementById('action').value='login'">Iniciar Sesión</button>
+                    <button class="toggle-btn" type="button" id="register-toggle" onclick="document.getElementById('action').value='register'">Registrarse</button>
+                </div>
+        </form>
 
             <div id="message-container" class="message-container"></div>
 
@@ -38,11 +49,11 @@
                 <form id="login-form" class="form active-form">
                     <div class="input-group animate__animated animate__fadeIn">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" id="login-email" placeholder="Correo electrónico" required>
+                        <input type="email" id="login-email" name="login-email" placeholder="Correo electrónico" required>
                     </div>
                     <div class="input-group animate__animated animate__fadeIn animate__delay-1s">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="login-password" placeholder="Contraseña" required>
+                        <input type="password" id="login-password" name="login-password" placeholder="Contraseña" required>
                         <i class="fas fa-eye toggle-password" onclick="togglePassword('login-password', this)"></i>
                     </div>
                     <div class="options">
@@ -69,15 +80,15 @@
                 <form id="register-form" class="form">
                     <div class="input-group animate__animated animate__fadeIn">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="register-name" placeholder="Nombre completo" required>
+                        <input type="text" id="register-name" name="register-name" placeholder="Nombre completo" required>
                     </div>
                     <div class="input-group animate__animated animate__fadeIn animate__delay-1s">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" id="register-email" placeholder="Correo electrónico" required>
+                        <input type="email" id="register-email" name="register-email" placeholder="Correo electrónico" required>
                     </div>
                     <div class="input-group animate__animated animate__fadeIn animate__delay-2s">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="register-password" placeholder="Contraseña (mín. 8 caracteres)" required minlength="8">
+                        <input type="password" id="register-password" name="register-password" placeholder="Contraseña (mín. 8 caracteres)" required minlength="8">
                         <i class="fas fa-eye toggle-password" onclick="togglePassword('register-password', this)"></i>
                         <div class="password-strength">
                             <span class="strength-bar"></span>
@@ -88,11 +99,11 @@
                     </div>
                     <div class="input-group animate__animated animate__fadeIn animate__delay-3s">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="register-confirm-password" placeholder="Confirmar contraseña" required>
+                        <input type="password" id="register-confirm-password" name="register-confirm-password" placeholder="Confirmar contraseña" required>
                     </div>
                     <div class="terms">
                         <label>
-                            <input type="checkbox" id="accept-terms" required> Acepto los <a href="#" id="terms-link">términos y condiciones</a> y la <a href="#" id="privacy-link">política de privacidad</a>
+                            <input type="checkbox" id="accept-terms" required> Acepto los <a href="#" id="terms-link"> términos y condiciones </a> y la <a href="#" id="privacy-link"> política de privacidad </a>
                         </label>
                     </div>
                     <button type="submit" class="submit-btn animate__animated animate__fadeIn animate__delay-4s">
@@ -159,6 +170,37 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+            // Obtener referencias a los botones y formularios
+            const loginToggleBtn = document.getElementById('login-toggle');
+            const registerToggleBtn = document.getElementById('register-toggle');
+          
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+          
+            // Función para mostrar el formulario de login
+            function showLogin() {
+              loginForm.classList.add('active-form');
+              registerForm.classList.remove('active-form');
+          
+              // Actualizar botones
+              loginToggleBtn.classList.add('active');
+              registerToggleBtn.classList.remove('active');
+            }
+          
+            // Función para mostrar el formulario de registro
+            function showRegister() {
+              loginForm.classList.remove('active-form');
+              registerForm.classList.add('active-form');
+          
+              // Actualizar botones
+              registerToggleBtn.classList.add('active');
+              loginToggleBtn.classList.remove('active');
+            }
+          
+            // Agregar eventos a los botones
+            document.getElementById('login-toggle').addEventListener('click', showLogin);
+            document.getElementById('register-toggle').addEventListener('click', showRegister);
+    </script>
 </body>
 </html>
