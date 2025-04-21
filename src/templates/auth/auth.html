@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusAI Pro - Plataforma de Inteligencia Artificial</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style_auth.css")}}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="ai-header">
+            <div class="ai-logo">
+                <i class="fas fa-robot"></i>
+                <span>NexusAI Pro</span>
+            </div>
+            <p class="animate__animated animate__fadeIn">Potencia tu negocio con inteligencia artificial de última generación</p>
+            <div class="tech-icons animate__animated animate__fadeIn animate__delay-1s">
+                <i class="fab fa-python" title="Python"></i>
+                <i class="fas fa-brain" title="Machine Learning"></i>
+                <i class="fas fa-chart-bar" title="Análisis de Datos"></i>
+                <i class="fas fa-cloud" title="Cloud Computing"></i>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="form-toggle">
+                <button class="toggle-btn active" id="login-toggle">Iniciar Sesión</button>
+                <button class="toggle-btn" id="register-toggle">Registrarse</button>
+            </div>
+
+            <div id="message-container" class="message-container"></div>
+
+            <div class="form-content">
+                <!-- Formulario de Login -->
+                <form id="login-form" class="form active-form">
+                    <div class="input-group animate__animated animate__fadeIn">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="login-email" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="input-group animate__animated animate__fadeIn animate__delay-1s">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="login-password" placeholder="Contraseña" required>
+                        <i class="fas fa-eye toggle-password" onclick="togglePassword('login-password', this)"></i>
+                    </div>
+                    <div class="options">
+                        <label>
+                            <input type="checkbox" id="remember-me"> Recordar sesión
+                        </label>
+                        <a href="#" class="forgot-password" id="forgot-password">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <button type="submit" class="submit-btn animate__animated animate__fadeIn animate__delay-2s">
+                        <span class="btn-text">Acceder</span>
+                        <i class="fas fa-spinner fa-spin loading-icon"></i>
+                    </button>
+                    <div class="social-login">
+                        <p>O inicia sesión con</p>
+                        <div class="social-icons">
+                            <i class="fab fa-google" title="Google"></i>
+                            <i class="fab fa-microsoft" title="Microsoft"></i>
+                            <i class="fab fa-apple" title="Apple"></i>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Formulario de Registro -->
+                <form id="register-form" class="form">
+                    <div class="input-group animate__animated animate__fadeIn">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="register-name" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="input-group animate__animated animate__fadeIn animate__delay-1s">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="register-email" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="input-group animate__animated animate__fadeIn animate__delay-2s">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="register-password" placeholder="Contraseña (mín. 8 caracteres)" required minlength="8">
+                        <i class="fas fa-eye toggle-password" onclick="togglePassword('register-password', this)"></i>
+                        <div class="password-strength">
+                            <span class="strength-bar"></span>
+                            <span class="strength-bar"></span>
+                            <span class="strength-bar"></span>
+                            <span class="strength-text"></span>
+                        </div>
+                    </div>
+                    <div class="input-group animate__animated animate__fadeIn animate__delay-3s">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="register-confirm-password" placeholder="Confirmar contraseña" required>
+                    </div>
+                    <div class="terms">
+                        <label>
+                            <input type="checkbox" id="accept-terms" required> Acepto los <a href="#" id="terms-link">términos y condiciones</a> y la <a href="#" id="privacy-link">política de privacidad</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="submit-btn animate__animated animate__fadeIn animate__delay-4s">
+                        <span class="btn-text">Crear cuenta</span>
+                        <i class="fas fa-spinner fa-spin loading-icon"></i>
+                    </button>
+                </form>
+
+                <!-- Formulario de Recuperación -->
+                <form id="recover-form" class="form">
+                    <div class="input-group animate__animated animate__fadeIn">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="recover-email" placeholder="Correo electrónico registrado" required>
+                    </div>
+                    <button type="submit" class="submit-btn animate__animated animate__fadeIn animate__delay-1s">
+                        <span class="btn-text">Enviar enlace de recuperación</span>
+                        <i class="fas fa-spinner fa-spin loading-icon"></i>
+                    </button>
+                    <div class="back-to-login animate__animated animate__fadeIn animate__delay-2s">
+                        <a href="#" id="back-to-login"><i class="fas fa-arrow-left"></i> Volver al inicio de sesión</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="ai-features">
+            <div class="feature animate__animated animate__fadeIn">
+                <i class="fas fa-comment-dots"></i>
+                <h3>Chat Inteligente</h3>
+                <p>Conversaciones naturales con nuestra IA avanzada</p>
+            </div>
+            <div class="feature animate__animated animate__fadeIn animate__delay-1s">
+                <i class="fas fa-project-diagram"></i>
+                <h3>Automatización</h3>
+                <p>Automatiza tus procesos con nuestros modelos</p>
+            </div>
+            <div class="feature animate__animated animate__fadeIn animate__delay-2s">
+                <i class="fas fa-database"></i>
+                <h3>Big Data</h3>
+                <p>Procesamiento de grandes volúmenes de datos</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="terms-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Términos y Condiciones</h2>
+            <div class="modal-body">
+                <!-- Contenido de términos y condiciones -->
+                <p>Aquí irían los términos y condiciones detallados del servicio...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="privacy-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Política de Privacidad</h2>
+            <div class="modal-body">
+                <!-- Contenido de política de privacidad -->
+                <p>Aquí iría la política de privacidad detallada del servicio...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
