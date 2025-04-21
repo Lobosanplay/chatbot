@@ -10,6 +10,6 @@ def Login():
         print(request.form["password"])
         return redirect( url_for("inicio.home"))
     else:
-        return render_template("auth/login.html")
+        return render_template("auth/auth.html")
 
 
