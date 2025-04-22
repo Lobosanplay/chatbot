@@ -11,6 +11,9 @@ def chatbot():
     if not user_input:
         return jsonify({"error": "el mensaje no puede estar vacio."}), 400
     
+    if user_input == "hola":
+        return jsonify({"response": "Hola como estas"})
+    
     respuesta = openai.chat.completions.create(
     model="gpt-3.5-turbo",
     messages=[{"role": "user", "content": user_input}]

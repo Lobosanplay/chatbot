@@ -209,6 +209,7 @@
                     </button>
                 </div>
             </div>
+        </div> 
         </form>
 
         <!-- Right Panel -->
@@ -291,33 +292,54 @@
 
     <script>
         document.getElementById('chat-form').addEventListener('submit', function(e) {
-            const message = document.getElementById('user-input').value.trim();
+            e.preventDefault(); // Prevenir envío por defecto
+        
+            const messageInput = document.getElementById('user-input');
+            const message = messageInput.value.trim();
+        
             if (!message) {
-                e.preventDefault(); // Evitar envío si está vacío
                 alert('Por favor, escribe un mensaje antes de enviar.');
+                return; // Detener si está vacío
             }
+        
+            // Enviar el mensaje al servidor
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    // Mostrar la respuesta en la interfaz
+                    mostrarRespuesta(data.response);
+                    messageInput.value = ''; // Limpiar el input
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         });
         
-        fetch('/chat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({ message: message })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                alert(data.error);
-            } else {
-                // Mostrar la respuesta en la interfaz
-                mostrarRespuesta(data.response);
-                messageInput.value = ''; // Limpiar el input
+        function mostrarRespuesta(respuesta) {
+            // Crear o seleccionar el contenedor del chat
+            let chatBox = document.getElementById('chat-box');
+            if (!chatBox) {
+                chatBox = document.createElement('div');
+                chatBox.id = 'chat-box';
+                document.body.appendChild(chatBox);
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        
+            // Crear el mensaje del bot
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'bot-message';
+            msgDiv.innerText = respuesta;
+            chatBox.appendChild(msgDiv);
+        }
     
     function mostrarRespuesta(respuesta) {
         // Aquí puedes agregar la respuesta a un chat en la interfaz
