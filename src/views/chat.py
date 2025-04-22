@@ -7,7 +7,7 @@ chat = Blueprint("chatbot", __name__)
 
 @chat.route('/chat', methods=['POST'])
 def chatbot():
-    user_input = request.form.get('message', '').strip()
+    user_input = request.form.get('user-input', '').strip()
     if not user_input:
         return jsonify({"error": "el mensaje no puede estar vacio."}), 400
     

@@ -197,7 +197,7 @@
                         </button>
                     </div>
                     <div class="message-input-wrapper">
-                        <textarea id="user-input" placeholder="Escribe un mensaje..." rows="1"></textarea>
+                        <textarea id="user-input" name="user-input" placeholder="Escribe un mensaje..." rows="1"></textarea>
                         <div class="input-suggestions">
                             <span>Sugerencias:</span>
                             <div class="suggestion">¿Cómo puedo mejorar mi productividad?</div>
@@ -322,7 +322,7 @@
     function mostrarRespuesta(respuesta) {
         // Aquí puedes agregar la respuesta a un chat en la interfaz
         const chatBox = document.getElementById('chat-box');
-        chatbox.innerHTML += `<p><strong>Tú:</strong> ${userMessage}</p>`;
+        //<!--chatbox.innerHTML += `<p><strong>Tú:</strong> ${userMessage}</p>`;-->
         if (!chatBox) {
             // Crear un contenedor si no existe
             const container = document.createElement('div');
