@@ -31,16 +31,16 @@ document.getElementById('chat-form').addEventListener('submit', function (e) {
 
 function mostrarRespuesta(respuesta) {
     // Aquí puedes agregar la respuesta a un chat en la interfaz
-    const chatBox = document.getElementById('chat-box');
-    //<!--chatbox.innerHTML += `<p><strong>Tú:</strong> ${userMessage}</p>`;-->
+    const chatBox = document.getElementById('message bot-message');
+    chatbox.innerHTML += `<p><strong>Tú:</strong> ${userMessage}</p>`;
     if (!chatBox) {
         // Crear un contenedor si no existe
         const container = document.createElement('div');
-        container.id = 'chat-box';
+        container.id = 'message bot-message';
         document.body.appendChild(container);
     }
     const msgDiv = document.createElement('div');
-    msgDiv.className = 'bot-message';
+    msgDiv.className = 'message bot-message';
     msgDiv.innerText = respuesta;
-    document.getElementById('chat-box').appendChild(msgDiv);
+    document.getElementById('message bot-message').appendChild(msgDiv);
 }
