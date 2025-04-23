@@ -85,34 +85,24 @@ function submitAuthForm(action) {
       formData.append('login-email', document.querySelector('#login-email').value);
       formData.append('login-password', document.querySelector('#login-password').value);
   }
-
-  // Crear la solicitud AJAX
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', '/login', true); // reemplaza con la ruta correcta
-
-  // Configurar la función de callback para la respuesta
-  xhr.onload = function() {
-      if (xhr.status >= 200 && xhr.status < 300) {
-          try {
-              const data = JSON.parse(xhr.responseText);
-              if (data.redirect_url) {
-                  window.location.href = data.redirect_url;
-              } else {
-                  console.log('Respuesta:', data);
-              }
-          } catch (e) {
-              console.error('Error al parsear la respuesta JSON:', e);
-          }
-      } else {
-          console.error('Error en la solicitud:', xhr.statusText);
-      }
-  };
-
-  // Manejar errores de red
-  xhr.onerror = function() {
-      console.error('Error de red o de la solicitud');
-  };
-
-  // Enviar la solicitud con los datos del formulario
-  xhr.send(formData);
+  fetch('/login', {
+    method: 'POST',
+    body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.redirect_url) {
+            window.location.href = data.redirect_url;
+        } else {
+            console.log('Respuesta:', data);
+        }
+    })
+    .catch(error => {
+        console.error('Error en la solicitud:', error);
+    });
 }

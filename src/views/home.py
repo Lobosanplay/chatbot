@@ -1,8 +1,14 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, session
 
 
 principal = Blueprint("inicio", __name__)
 
 @principal.route("/")
+def inict():
+    user = session.get('user.id')
+    return redirect('/home', user=user) 
+
+@principal.route("/home")
 def home():
-    return render_template('message.html') 
+    user = session.get('user.id')
+    return render_template('message.html', user=user) 
