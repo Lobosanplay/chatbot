@@ -585,3 +585,7 @@ body {
         padding: 12px 15px 12px 40px;
     }
 }
+
+a {
+    text-decoration: none 
+}

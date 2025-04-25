@@ -5,14 +5,14 @@ from datetime import datetime as dt
 
 db = SQLAlchemy()
 
-
+# creamos las tablas de la base de datos
 class User(UserMixin, db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(255))
-    google_id = db.Column(db.String(100))
+    provider = db.Column(db.String(100), nullable=False)
     messages_left = db.Column(db.Integer, default=10, nullable=False)# Límite diario
     created_at = db.Column(db.DateTime, default=dt.utcnow)
     chats = db.relationship('ChatHistory', backref='user', lazy=True)

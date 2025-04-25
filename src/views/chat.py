@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 import openai
 
-
+# creamos un blueprint de el chatbot
 chat = Blueprint("chatbot", __name__)
 
 

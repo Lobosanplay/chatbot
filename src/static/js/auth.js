@@ -85,7 +85,7 @@ function submitAuthForm(action) {
       formData.append('login-email', document.querySelector('#login-email').value);
       formData.append('login-password', document.querySelector('#login-password').value);
   }
-  fetch('/login', {
+  fetch('/api/login-register', {
     method: 'POST',
     body: formData
     })
