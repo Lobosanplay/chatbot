@@ -72,13 +72,10 @@ def auth():
             # comprobamos si el email existe en la base de datos
             user = User.query.filter_by(email=email_login).first()
             
-            # hasheamos la contraseña para comprobar si es igual a la base de datos
-            confirm = check_password_hash(user.password, password_login)
-            
             # si todo esta bien iniciamos session, si no devolvemos un error
-            if user and confirm:
+            if user and check_password_hash(user.password , password_login):
                 session['user_id'] = user.id
-                flash('Inicio de sesión exitoso.')
+                # flash('Inicio de sesión exitoso.')
                 return jsonify({"redirect_url": url_for('inicio.home')})
             else:
                 flash('Credenciales incorrectas.')
@@ -107,44 +104,22 @@ def auth_callback(provider):
     client = oauth.create_client(provider)
     token = client.authorize_access_token()
     user_info = None
-    email = None
-    name = None
-
 
     if provider == 'google':
         resp = client.get('userinfo')
         user_info = resp.json()
-        email = user_info.get('email')
-        name = user_info.get('name')
     elif provider == 'microsoft':
         resp = client.get('me')
         user_info = resp.json()
-        email = user_info.get('mail') or user_info.get('userPrincipalName')
-        name = user_info.get('displayName')
     elif provider == 'apple':
         # Apple devuelve un id_token que debes decodificar
         id_token = token.get('id_token')
         # Aquí deberías decodificar el JWT para obtener info del usuario
         # Para simplificar, asumimos que ya tienes la info
         user_info = {'email': 'user@apple.com'}  # Placeholder
-        email = 'user@apple.com' 
-        name = 'Apple User'
-    
-    user = User.query.filter_by(email=email, provider=provider).first()
 
-    if not user:
-        # Crear nuevo usuario
-        user = User(email=email, provider=provider, name=name)
-        db.session.add(user)
-    else:
-        # Actualizar info si es necesario
-        user.email = email  # por si cambió
-        # Puedes actualizar otros campos aquí
-
-    db.session.commit()
-
-  # Guardar solo el ID del usuario en la sesión   
-    session['user_id'] = user.id
+    # Guardar info en sesión
+    session['user'] = user_info
     return redirect(url_for('inicio.home'))
 
 # creamos un logout simple.

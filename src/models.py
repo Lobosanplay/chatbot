@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(100), unique=True)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(255))
-    provider = db.Column(db.String(100), nullable=False)
+    provider = db.Column(db.String(100))
     messages_left = db.Column(db.Integer, default=10, nullable=False)# Límite diario
     created_at = db.Column(db.DateTime, default=dt.utcnow)
     chats = db.relationship('ChatHistory', backref='user', lazy=True)

@@ -12,10 +12,13 @@ from views.chat import chat
 from views.home import principal
 
 from models import db
+from dotenv import load_dotenv
+
 
 import openai
 import os
 
+load_dotenv()  # carga las variables del archivo .env
 
 # creamos la app
 app = Flask(__name__)
@@ -45,8 +48,8 @@ app.register_blueprint(Auth)
 # Registros de proveedores OAuth
 oauth.register(
     name='google',
-    client_id='TU_CLIENT_ID_GOOGLE',
-    client_secret='TU_CLIENT_SECRET_GOOGLE',
+    client_id= os.getenv("GOOGLE_CLIENT_ID"),
+    client_secret= os.getenv("GOOGLE_CLIENT_SECRET"),
     access_token_url='https://oauth2.googleapis.com/token',
     authorize_url='https://accounts.google.com/o/oauth2/auth',
     api_base_url='https://www.googleapis.com/oauth2/v1/',
@@ -55,8 +58,8 @@ oauth.register(
 
 oauth.register(
     name='microsoft',
-    client_id='TU_CLIENT_ID_MICROSOFT',
-    client_secret='TU_CLIENT_SECRET_MICROSOFT',
+    client_id= os.getenv("MICROSOFT_CLIENT_ID"),
+    client_secret= os.getenv("MICROSOFT_CLIENT_SECRET"),
     authorize_url='https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
     access_token_url='https://login.microsoftonline.com/common/oauth2/v2.0/token',
     api_base_url='https://graph.microsoft.com/v1.0/',
@@ -65,8 +68,8 @@ oauth.register(
 
 oauth.register(
     name='apple',
-    client_id='TU_CLIENT_ID_APPLE',
-    client_secret='TU_CLIENT_SECRET_APPLE',
+    client_id= os.getenv("APPLE_CLIENT_ID"),
+    client_secret= os.getenv("APPLE_CLIENT_SECRET"),
     authorize_url='https://appleid.apple.com/auth/authorize',
     access_token_url='https://appleid.apple.com/auth/token',
     api_base_url='https://appleid.apple.com/auth',

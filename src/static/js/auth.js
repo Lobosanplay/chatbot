@@ -97,7 +97,7 @@ function submitAuthForm(action) {
     })
     .then(data => {
         if (data.redirect_url) {
-            window.location.href = data.redirect_url;
+            window.open(data.redirect_url, '_self')
         } else {
             console.log('Respuesta:', data);
         }
