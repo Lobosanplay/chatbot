@@ -1,5 +1,5 @@
 
-from flask import Flask
+from flask import Flask, g, session
 # from flask_wtf.csrf import CSRFProtect
 # from flask_talisman import Talisman
 from flask_cors import CORS
@@ -11,7 +11,7 @@ from views.login import Auth
 from views.chat import chat
 from views.home import principal
 
-from models import db
+from models import User, db
 from dotenv import load_dotenv
 
 
@@ -44,6 +44,15 @@ oauth = OAuth(app)
 app.register_blueprint(chat)
 app.register_blueprint(principal)
 app.register_blueprint(Auth)
+
+@app.before_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = User.query.get(user_id)
+
 
 # Registros de proveedores OAuth
 oauth.register(

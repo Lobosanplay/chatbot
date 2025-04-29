@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template, g
 
 
 principal = Blueprint("inicio", __name__)
@@ -6,5 +6,4 @@ principal = Blueprint("inicio", __name__)
 # creamos una instancia para home
 @principal.route("/")
 def home():
-    user = session.get('user')
-    return render_template('message.html', user=user) 
+    return render_template('message.html', user=g.user) 

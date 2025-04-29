@@ -28,10 +28,10 @@
             <input type="hidden" name="action" id="action" value="login" />
             <div class="form-container">
                 <div class="form-toggle">
-                    <button class="toggle-btn active" type="button" id="login-toggle" onclick="document.getElementById('action').value='login'">Iniciar Sesión</button>
-                    <button class="toggle-btn" type="button" id="register-toggle" onclick="document.getElementById('action').value='register'">Registrarse</button>
+                    <button class="toggle-btn active" type="button" id="login-toggle" onclick="setAction()">Iniciar Sesión</button>
+                    <button class="toggle-btn" type="button" id="register-toggle" onclick="setAction()">Registrarse</button>
                 </div>
-        </form>
+
 
             <div id="message-container" class="message-container">
                 {% with messages = get_flashed_messages(with_categories=True) %}
@@ -45,9 +45,8 @@
                 {% endwith %}
             </div>
 
-            <div class="form-content">
                 <!-- Formulario de Login -->
-                <form id="login-form" class="form active-form">
+                <div id="login-form" class="form active-form">
                     <div class="input-group animate__animated animate__fadeIn">
                         <i class="fas fa-envelope"></i>
                         <input type="email" id="login-email" name="login-email" placeholder="Correo electrónico" required>
@@ -75,10 +74,9 @@
                             <a href="/login/apple"> <i class="fab fa-apple" title="Apple"></i> </a>
                         </div>
                     </div>
-                </form>
-
+                </div>
                 <!-- Formulario de Registro -->
-                <form id="register-form" class="form">
+                <div id="register-form" class="form">
                     <div class="input-group animate__animated animate__fadeIn">
                         <i class="fas fa-user"></i>
                         <input type="text" id="register-name" name="register-name" placeholder="Nombre completo" required>
@@ -111,7 +109,8 @@
                         <span class="btn-text">Crear cuenta</span>
                         <i class="fas fa-spinner fa-spin loading-icon"></i>
                     </button>
-                </form>
+                </div>
+        </form>
 
                 <!-- Formulario de Recuperación -->
                 <form id="recover-form" class="form">
@@ -127,7 +126,7 @@
                         <a href="#" id="back-to-login"><i class="fas fa-arrow-left"></i> Volver al inicio de sesión</a>
                     </div>
                 </form>
-            </div>
+            
         </div>
 
         <div class="ai-features">

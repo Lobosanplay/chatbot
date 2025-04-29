@@ -1,34 +1,37 @@
-            // Obtener referencias a los botones y formularios
-            const loginToggleBtn = document.getElementById('login-toggle');
-            const registerToggleBtn = document.getElementById('register-toggle');
-          
-            const loginForm = document.getElementById('login-form');
-            const registerForm = document.getElementById('register-form');
-          
-            // Función para mostrar el formulario de login
-            function showLogin() {
-              loginForm.classList.add('active-form');
-              registerForm.classList.remove('active-form');
-          
-              // Actualizar botones
-              loginToggleBtn.classList.add('active');
-              registerToggleBtn.classList.remove('active');
-            }
-          
-            // Función para mostrar el formulario de registro
-            function showRegister() {
-              loginForm.classList.remove('active-form');
-              registerForm.classList.add('active-form');
-          
-              // Actualizar botones
-              registerToggleBtn.classList.add('active');
-              loginToggleBtn.classList.remove('active');
-            }
-          
-            // Agregar eventos a los botones
-            document.getElementById('login-toggle').addEventListener('click', showLogin);
-            document.getElementById('register-toggle').addEventListener('click', showRegister);
+function setAction() {
+  // Obtener referencias a los botones y formularios
+  const loginToggleBtn = document.getElementById('login-toggle');
+  const registerToggleBtn = document.getElementById('register-toggle');
 
+  const loginForm = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+
+  // Función para mostrar el formulario de login
+  function showLogin() {
+    loginForm.classList.add('active-form');
+    registerForm.classList.remove('active-form');
+
+    // Actualizar botones
+    loginToggleBtn.classList.add('active');
+    registerToggleBtn.classList.remove('active');
+  }
+
+  // Función para mostrar el formulario de registro
+  function showRegister() {
+    loginForm.classList.remove('active-form');
+    registerForm.classList.add('active-form');
+
+    // Actualizar botones
+    registerToggleBtn.classList.add('active');
+    loginToggleBtn.classList.remove('active');
+  }
+  
+  // Agregar eventos a los botones
+  document.getElementById('login-toggle').addEventListener('click', showLogin);
+  document.getElementById('register-toggle').addEventListener('click', showRegister);
+
+}
+          
             
              // Función para mostrar/ocultar contraseña
         function togglePassword(inputId, icon) {

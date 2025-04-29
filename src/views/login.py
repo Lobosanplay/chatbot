@@ -75,7 +75,7 @@ def auth():
             # si todo esta bien iniciamos session, si no devolvemos un error
             if user and check_password_hash(user.password , password_login):
                 session['user_id'] = user.id
-                # flash('Inicio de sesión exitoso.')
+                flash('Inicio de sesión exitoso.')
                 return jsonify({"redirect_url": url_for('inicio.home')})
             else:
                 flash('Credenciales incorrectas.')

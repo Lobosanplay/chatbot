@@ -186,6 +186,10 @@ body {
     flex-direction: column;
 }
 
+.active-form {
+    display: block;
+  }
+
 .form.active-form {
     display: flex;
 }
