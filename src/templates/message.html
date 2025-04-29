@@ -26,7 +26,7 @@
             </div>
 
             <div class="search-container">
-                <input type="text" placeholder="Buscar conversaciones...">
+                <input type="text" name="search" placeholder="Buscar conversaciones...">
                 <i class="fas fa-search"></i>
             </div>
 
@@ -90,18 +90,26 @@
 
             <div class="user-profile">
                 <div class="avatar-container">
+                {% if  user == none:%}
+                    <a href="{{ url_for('auth.login') }}">Iniciar Sesion</a>
+                {% else %}
                     <div class="avatar-ring">
                         <img src="https://i.pravatar.cc/150?img=5" alt="Usuario">
+                        </div>
+                        <div class="status-dot online"></div>
                     </div>
-                    <div class="status-dot online"></div>
-                </div>
-                <div class="user-info">
-                    <span class="username">{{ user.username }}</span>
-                    <span class="user-plan">Plan Pro</span>
-                </div>
-                <button class="settings-btn">
-                    <i class="fas fa-cog"></i>
-                </button>
+                    <div class="user-info">
+                        <span class="username">{{ user.username }}</span>
+                        <span class="user-plan">Plan Pro</span>
+                {% endif %}
+                    </div>
+            {% if user == none:%}
+  
+            {% else %}
+            <button class="settings-btn">
+                <i class="fas fa-cog"></i>
+            </button>
+            {% endif %}
             </div>
         </div>
 
