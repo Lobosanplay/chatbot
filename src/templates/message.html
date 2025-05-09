@@ -91,10 +91,13 @@
             <div class="user-profile">
                 <div class="avatar-container">
                 {% if  user == none:%}
-                    <a href="{{ url_for('auth.login') }}">Iniciar Sesion</a>
+                    <div class="container-login">
+                        <a href="{{ url_for('auth.login') }}" class="login-link"> <i class="fa fa-sign-in" aria-hidden="true"> </i> </a>
+                    </div>
                 {% else %}
                     <div class="avatar-ring">
-                        <img src="https://i.pravatar.cc/150?img=5" alt="Usuario">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <!--<img src="https://i.pravatar.cc/150?img=5" alt="Usuario">-->
                         </div>
                         <div class="status-dot online"></div>
                     </div>
@@ -106,6 +109,7 @@
             {% if user == none:%}
   
             {% else %}
+            <a href="{{ url_for('auth.logout') }}" class="logout-link"> <i class="fa fa-sign-out" aria-hidden="true"></i> </a>
             <button class="settings-btn">
                 <i class="fas fa-cog"></i>
             </button>

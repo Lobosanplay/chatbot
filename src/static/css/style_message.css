@@ -1241,3 +1241,22 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
 }
+
+.login-link {
+    /* Tus estilos aquí */
+    position: relative;
+    left: 120px;  /* distancia desde la derecha del contenedor */
+    color: var(--primary-color);
+    font-size: 30px;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    color: var(--primary-dark);
+}
+
+/* Estilo para el icono dentro de esa clase */
+.login-link i {
+    /* Tus estilos aquí */
+    color: inherit; /* Usa el color del enlace */
+}
