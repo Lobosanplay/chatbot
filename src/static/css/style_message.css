@@ -607,15 +607,14 @@ body {
 }
 
 .user-message {
-    align-self: flex-end;
-    flex-direction: row-reverse;
+    align-self: flex-start;
 }
 
 .message-content {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 8px;
-    max-width: calc(100% - 60px);
+    max-width: calc(100%);
 }
 
 .message-text {
@@ -834,14 +833,21 @@ body {
     background-color: white;
     box-shadow: -2px 0 10px rgba(0,0,0,0.05);
     display: flex;
+    visibility: hidden; /* oculto por defecto */
     flex-direction: column;
-    transform: translateX(100%);
+    transform: translateX(100%); /* fuera de vista */
     transition: var(--transition);
     position: absolute;
     right: 0;
     top: 0;
     bottom: 0;
     z-index: 15;
+}
+
+.right-panel.show{
+    visibility: visible; /* visible cuando se muestra */
+    transform: translateX(0); /* en posición */    
+    display: flex; /* aseguramos que se muestre */
 }
 
 .panel-header {
@@ -1259,4 +1265,19 @@ body {
 .login-link i {
     /* Tus estilos aquí */
     color: inherit; /* Usa el color del enlace */
+}
+#label_toggle {
+    font-size: 20px;
+    padding: 50%;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+#label_toggle:hover {
+    color: var(--primary-dark);
+}
+#toggle {
+    display: none;
+}
+.dark {
+    filter: invert(90%);
 }

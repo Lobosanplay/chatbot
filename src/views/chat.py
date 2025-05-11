@@ -9,7 +9,7 @@ chat = Blueprint("chatbot", __name__)
 def chatbot():
     user_input = request.form.get('user-input', '').strip()
     if user_input == "hola":
-        return jsonify({"response": "Hola como estas"})
+        return jsonify({"response": "Aun no hay una api en esta app"})
     
     respuesta = openai.chat.completions.create(
     model="gpt-3.5-turbo",
