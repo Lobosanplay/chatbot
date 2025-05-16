@@ -1,10 +1,24 @@
-function setAction() {
+
+// Agregar eventos a los botones
+document.getElementById('login-toggle').addEventListener('click', () => setAction('login'));
+document.getElementById('register-toggle').addEventListener('click', () => setAction('register'));
+
+function setAction(action) {
+
   // Obtener referencias a los botones y formularios
   const loginToggleBtn = document.getElementById('login-toggle');
   const registerToggleBtn = document.getElementById('register-toggle');
 
   const loginForm = document.getElementById('login-form');
   const registerForm = document.getElementById('register-form');
+
+  const actionInput = document.getElementById('action');
+  actionInput.value = action;
+  if (action === 'login') {
+    showLogin();
+  } else  if (action == "register") {
+    showRegister();
+  }
 
   // Función para mostrar el formulario de login
   function showLogin() {
@@ -25,10 +39,6 @@ function setAction() {
     registerToggleBtn.classList.add('active');
     loginToggleBtn.classList.remove('active');
   }
-  
-  // Agregar eventos a los botones
-  document.getElementById('login-toggle').addEventListener('click', showLogin);
-  document.getElementById('register-toggle').addEventListener('click', showRegister);
 
 }
           
@@ -69,11 +79,13 @@ function setAction() {
 
 // Función para manejar el envío del formulario usando AJAX
 function submitAuthForm(action) {
+  var csrf_token = "{{ csrf_token() }}";
   // Crear un objeto FormData para recopilar los datos del formulario
   const formData = new FormData();
 
   // Agregar el campo 'action' para indicar si es login o register
   formData.append('action', action);
+  
 
   if (action === 'register') {
       // Obtener los valores del formulario de registro
@@ -90,7 +102,11 @@ function submitAuthForm(action) {
   }
   fetch('/api/login-register', {
     method: 'POST',
-    body: formData
+    body: formData,
+//     headers: {
+//     'X-CSRFToken': csrf_token // o 'X-CSRF-Token' dependiendo del backend
+//   },
+
     })
     .then(response => {
         if (!response.ok) {

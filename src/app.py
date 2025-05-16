@@ -10,6 +10,7 @@ from config import Config, configurations
 from views.login import Auth
 from views.chat import chat
 from views.home import principal
+from views.providers import AuthP
 
 from models import User, db
 from dotenv import load_dotenv
@@ -32,7 +33,11 @@ db.init_app(app)
 # obtenemos la API de openai
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-CORS(app)
+# CORS(app, resources={
+#     r"/*": {"origins": ["http://127.0.0.1:5000", "http://localhost:5000"],
+#             "supports_credentials": True,
+#            "allow_headers": ["Content-Type", "Authorization"]}
+# })
 
 # Configuración de OAuth
 oauth = OAuth(app)
@@ -40,10 +45,11 @@ oauth = OAuth(app)
 # csrf = CSRFProtect(app)
 # Talisman(app, force_https=True)
 
-# agregamos la Views con blueprint
+# agregamos las rutas con blueprint
 app.register_blueprint(chat)
 app.register_blueprint(principal)
 app.register_blueprint(Auth)
+app.register_blueprint(AuthP)
 
 @app.before_request
 def load_logged_in_user():
