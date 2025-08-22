@@ -103,10 +103,6 @@ function submitAuthForm(action) {
   fetch('/api/login-register', {
     method: 'POST',
     body: formData,
-//     headers: {
-//     'X-CSRFToken': csrf_token // o 'X-CSRF-Token' dependiendo del backend
-//   },
-
     })
     .then(response => {
         if (!response.ok) {

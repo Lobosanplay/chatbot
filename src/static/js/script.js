@@ -85,18 +85,13 @@ const rightPanel = document.getElementById("rightpanel")
 const closeBtn = document.querySelector(".close-panel")
 
 function showPanel() {
-    rightPanel.classList.add("show")
-}
-function hidePanel() {
-    rightPanel.classList.remove('show');
+    rightPanel.classList.toggle("show")
 }
 settingsBtn.addEventListener('click', showPanel);
-closeBtn.addEventListener('click', hidePanel)
 
-
-const body = document.getElementById("body")
-const labelToggle = document.getElementById("label_toggle")
 function darkness() {
+    const body = document.getElementById("body")
+    const labelToggle = document.getElementById("label_toggle")
 
     body.classList.toggle("dark")
     if(body.classList.contains("dark")){

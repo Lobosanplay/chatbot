@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -27,7 +26,6 @@
         
         <form method="POST" action="{{ url_for('auth.auth') }}">
             <input type="hidden" name="action" id="action" value="login">
-
             <div class="form-container">
                 <div class="form-toggle">
                     <button class="toggle-btn active" type="button" id="login-toggle" onclick="setAction('login')">Iniciar Sesión</button>

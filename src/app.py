@@ -1,8 +1,8 @@
 
 from flask import Flask, g, session
-# from flask_wtf.csrf import CSRFProtect
+# from flask_wtf import CSRFProtect
 # from flask_talisman import Talisman
-from flask_cors import CORS
+# from flask_cors import CORS
 
 from authlib.integrations.flask_client import OAuth
 from config import Config, configurations
