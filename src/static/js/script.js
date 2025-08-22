@@ -100,3 +100,67 @@ function darkness() {
         labelToggle.innerHTML="<i class='fas fa-moon'>";
     }
 }
+// Cargar conversaciones al abrir la aplicación
+let currentPage = 1;
+
+function loadConversations(page = 1) {
+    fetch(`/conversations?page=${page}`)
+        .then(response => {
+            if (response.status === 401) {
+                // Redirigir a login si no autenticado
+                window.location.href = '/login';
+                throw new Error('No autenticado');
+            }
+            return response.json();
+        })
+        .then(data => {
+            renderConversations(data.conversations);
+            updatePagination(data);
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function renderConversations(conversations) {
+    const historyContainer = document.querySelector('.chat-history');
+    historyContainer.innerHTML = ''; // Limpiar contenedor
+    
+    conversations.forEach(conv => {
+        const conversationElement = document.createElement('div');
+        conversationElement.className = 'history-item';
+        conversationElement.innerHTML = `
+            <div class="item-icon tech-bg">
+                <i class="fas fa-comment"></i>
+            </div>
+            <div class="item-details">
+                <span class="item-title">${conv.message.substring(0, 30)}...</span>
+                <span class="item-preview">${conv.bot_reply.substring(0, 40)}...</span>
+            </div>
+            <span class="item-time">${new Date(conv.timestamp).toLocaleTimeString()}</span>
+        `;
+        historyContainer.appendChild(conversationElement);
+    });
+}
+
+function updatePagination(data) {
+    // Implementar controles de paginación aquí
+    const paginationContainer = document.createElement('div');
+    paginationContainer.className = 'pagination';
+    
+    if (data.has_prev) {
+        paginationContainer.innerHTML += `<button onclick="loadConversations(${data.page - 1})">Anterior</button>`;
+    }
+    
+    paginationContainer.innerHTML += `<span>Página ${data.page} de ${data.total_pages}</span>`;
+    
+    if (data.has_next) {
+        paginationContainer.innerHTML += `<button onclick="loadConversations(${data.page + 1})">Siguiente</button>`;
+    }
+    
+    // Agregar al DOM donde corresponda
+    document.querySelector('.chat-history').after(paginationContainer);
+}
+
+// Llamar al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    loadConversations(1);
+});
